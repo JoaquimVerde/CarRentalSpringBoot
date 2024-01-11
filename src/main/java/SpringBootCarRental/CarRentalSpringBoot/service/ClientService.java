@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ClientService {
+public class ClientService implements ClientServiceInterface {
 
     private final ClientRepository clientRepository;
     @Autowired
@@ -22,11 +22,13 @@ public class ClientService {
         this.clientRepository = clientRepository;
     }
 
+    @Override
     public List<ClientDto> getClients() {
         List<Client> clients = clientRepository.findAll();
         return ClientConverter.ListClientToListClientDto(clients);
     }
 
+    @Override
     public void addNewClient(ClientDto client) {
         Optional<Client> clientOptional = this.clientRepository.findClientByEmail(client.email());
         if (clientOptional.isPresent())
@@ -35,6 +37,7 @@ public class ClientService {
         clientRepository.save(newClient);
     }
 
+    @Override
     public void deleteClient(Long clientId) {
         boolean exists = clientRepository.existsById(clientId);
         if (!exists) {

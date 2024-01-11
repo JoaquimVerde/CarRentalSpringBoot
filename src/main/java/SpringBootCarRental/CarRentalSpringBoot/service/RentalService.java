@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class RentalService {
+public class RentalService implements RentalServiceInterface {
 
     private final RentalRepository rentalRepository;
     private final CarRepository carRepository;
@@ -31,11 +31,13 @@ public class RentalService {
         this.clientRepository = clientRepository;
     }
 
+    @Override
     public List<RentalDto> getRentals() {
         List<Rental> rentals = rentalRepository.findAll();
         return RentalConverter.ListRentalToListRentalDto(rentals);
     }
 
+    @Override
     public void addNewRental(RentalPostDto rental) {
         Optional<Car> carOptional = this.carRepository.findById(rental.carID());
         if (carOptional.isEmpty())
@@ -47,6 +49,7 @@ public class RentalService {
         rentalRepository.save(newRental);
     }
 
+    @Override
     public void deleteRental(Long rentalId) {
         boolean exists = rentalRepository.existsById(rentalId);
         if (!exists) {

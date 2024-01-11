@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CarService {
+public class CarService implements CarServiceInterface {
 
     private final CarRepository carRepository;
     @Autowired
@@ -22,12 +22,14 @@ public class CarService {
     }
 
 
+    @Override
     public List<CarDto> getCars() {
         List<Car> cars = carRepository.findAll();
         return CarConverter.ListCarToListCarDto(cars);
 
     }
 
+    @Override
     public void addNewCar(CarDto car) {
         Optional<Car> carOptional = this.carRepository.findCarByLicensePlate(car.licensePlate());
         if (carOptional.isPresent())
@@ -36,6 +38,7 @@ public class CarService {
         carRepository.save(newCar);
     }
 
+    @Override
     public void deleteCar(Long carId) {
         boolean exists = carRepository.existsById(carId);
         if (!exists) {
