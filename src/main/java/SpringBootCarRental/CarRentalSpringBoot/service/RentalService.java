@@ -43,7 +43,7 @@ public class RentalService implements RentalServiceInterface {
         Client client = clientService.getById(rental.clientID());
         Rental newRental = RentalConverter.fromRentalPostDtotoRental(client, car, rental.returnDate());
 
-        //Rental newRental = new Rental(client, car);
+        //Rental newRental = new Rental(client, car, rental.returnDate());
 
         rentalRepository.save(newRental);
     }
