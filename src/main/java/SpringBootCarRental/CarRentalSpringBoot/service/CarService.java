@@ -7,8 +7,6 @@ import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
 import SpringBootCarRental.CarRentalSpringBoot.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -66,6 +64,7 @@ public class CarService implements CarServiceInterface {
         carRepository.save(carToUpdate);
     }
 
+    @Override
     public Car getById(Long id){
         Optional<Car> optionalCar = carRepository.findById(id);
         if (optionalCar.isEmpty()) {

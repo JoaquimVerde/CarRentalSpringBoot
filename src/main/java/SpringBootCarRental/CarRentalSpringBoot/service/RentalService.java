@@ -1,18 +1,17 @@
 package SpringBootCarRental.CarRentalSpringBoot.service;
 
-import SpringBootCarRental.CarRentalSpringBoot.converter.CarConverter;
 import SpringBootCarRental.CarRentalSpringBoot.converter.RentalConverter;
 import SpringBootCarRental.CarRentalSpringBoot.dto.RentalDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.RentalPostDto;
+import SpringBootCarRental.CarRentalSpringBoot.dto.RentalUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Client;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Rental;
-import SpringBootCarRental.CarRentalSpringBoot.repository.CarRepository;
-import SpringBootCarRental.CarRentalSpringBoot.repository.ClientRepository;
 import SpringBootCarRental.CarRentalSpringBoot.repository.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,8 +41,10 @@ public class RentalService implements RentalServiceInterface {
 
         Car car = carService.getById(rental.carID());
         Client client = clientService.getById(rental.clientID());
-        Rental newRental = RentalConverter.fromRentalPostDtotoRental(client,car);
-        //Rental newRental = new Rental(clientOptional.get(), carOptional.get());
+        Rental newRental = RentalConverter.fromRentalPostDtotoRental(client, car, rental.returnDate());
+
+        //Rental newRental = new Rental(client, car);
+
         rentalRepository.save(newRental);
     }
 
@@ -55,4 +56,20 @@ public class RentalService implements RentalServiceInterface {
         }
         rentalRepository.deleteById(rentalId);
     }
+    @Override
+    public void updateRental(Long id, RentalUpdateDto rental) {
+        Optional<Rental> rentalOptional = rentalRepository.findById(id);
+        if (rentalOptional.isEmpty()) {
+            throw new IllegalStateException("Rental with id " + id + " does not exist");
+        }
+
+        Rental rentalToUpdate = rentalOptional.get();
+
+        if(rental.returnDate() != null && rental.returnDate().isAfter(LocalDate.now()) && !rental.returnDate().equals(rentalToUpdate.getReturnDate())){
+            rentalToUpdate.setReturnDate(rental.returnDate());
+        }
+
+        rentalRepository.save(rentalToUpdate);
+    }
+
 }

@@ -11,7 +11,9 @@ public record RentalDto(
 
         Car car,
 
-        LocalDate dateOfRental
+        LocalDate dateOfRental,
+
+        LocalDate returnDate
 
 ) {
 }

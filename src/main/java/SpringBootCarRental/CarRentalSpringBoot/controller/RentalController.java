@@ -1,8 +1,6 @@
 package SpringBootCarRental.CarRentalSpringBoot.controller;
 
-import SpringBootCarRental.CarRentalSpringBoot.dto.CarDto;
-import SpringBootCarRental.CarRentalSpringBoot.dto.RentalDto;
-import SpringBootCarRental.CarRentalSpringBoot.dto.RentalPostDto;
+import SpringBootCarRental.CarRentalSpringBoot.dto.*;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Rental;
 import SpringBootCarRental.CarRentalSpringBoot.service.RentalService;
@@ -38,6 +36,12 @@ public class RentalController {
     @DeleteMapping(path = "{rentalId}")
     public ResponseEntity<Rental> deleteRental(@PathVariable("rentalId") Long rentalId) {
         rentalService.deleteRental(rentalId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping(path = "{rentalID}")
+    public ResponseEntity<Rental> updateRental(@PathVariable("rentalID") Long id, @Valid @RequestBody RentalUpdateDto rental) {
+        rentalService.updateRental(id, rental);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

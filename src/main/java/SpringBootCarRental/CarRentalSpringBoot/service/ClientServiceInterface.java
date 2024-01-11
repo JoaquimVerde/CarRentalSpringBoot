@@ -2,6 +2,7 @@ package SpringBootCarRental.CarRentalSpringBoot.service;
 
 import SpringBootCarRental.CarRentalSpringBoot.dto.ClientDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.ClientUpdateDto;
+import SpringBootCarRental.CarRentalSpringBoot.entity.Client;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface ClientServiceInterface {
     void deleteClient(Long clientId);
 
     void updateClient(Long id, ClientUpdateDto client);
+
+    Client getById(Long id);
 }

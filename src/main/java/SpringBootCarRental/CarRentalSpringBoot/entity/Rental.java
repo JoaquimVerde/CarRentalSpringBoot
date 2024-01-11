@@ -19,15 +19,18 @@ public class Rental {
 
     private LocalDate dateOfRental;
 
+    private LocalDate returnDate;
+
 
 
     public Rental() {
     }
 
-    public Rental(Client client, Car car) {
+    public Rental(Client client, Car car, LocalDate returnDate) {
         this.client = client;
         this.car = car;
         this.dateOfRental = LocalDate.now();
+        this.returnDate = returnDate;
     }
 
     public Long getId() {
@@ -60,5 +63,13 @@ public class Rental {
 
     public void setDateOfRental(LocalDate dateOfRental) {
         this.dateOfRental = dateOfRental;
+    }
+
+    public LocalDate getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(LocalDate returnDate) {
+        this.returnDate = returnDate;
     }
 }

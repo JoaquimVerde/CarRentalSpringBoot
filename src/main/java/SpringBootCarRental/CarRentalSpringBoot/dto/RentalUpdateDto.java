@@ -2,12 +2,8 @@ package SpringBootCarRental.CarRentalSpringBoot.dto;
 
 import java.time.LocalDate;
 
-public record RentalPostDto(
+public record RentalUpdateDto(
 
-        Long clientID,
-
-        Long carID,
         LocalDate returnDate
-
 ) {
 }

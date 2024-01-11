@@ -2,6 +2,7 @@ package SpringBootCarRental.CarRentalSpringBoot.service;
 
 import SpringBootCarRental.CarRentalSpringBoot.dto.RentalDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.RentalPostDto;
+import SpringBootCarRental.CarRentalSpringBoot.dto.RentalUpdateDto;
 
 import java.util.List;
 
@@ -11,4 +12,6 @@ public interface RentalServiceInterface {
     void addNewRental(RentalPostDto rental);
 
     void deleteRental(Long rentalId);
+
+    void updateRental(Long id, RentalUpdateDto rental);
 }
