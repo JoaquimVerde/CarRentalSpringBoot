@@ -45,7 +45,8 @@ public class RentalService implements RentalServiceInterface {
         Optional<Client> clientOptional = this.clientRepository.findById(rental.clientID());
         if (clientOptional.isEmpty())
             throw new IllegalStateException("client ID does not exist");
-        Rental newRental = new Rental(clientOptional.get(), carOptional.get());
+        Rental newRental = RentalConverter.fromRentalPostDtotoRental(clientOptional.get(),carOptional.get());
+        //Rental newRental = new Rental(clientOptional.get(), carOptional.get());
         rentalRepository.save(newRental);
     }
 
