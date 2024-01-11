@@ -20,15 +20,15 @@ import java.util.Optional;
 public class RentalService implements RentalServiceInterface {
 
     private final RentalRepository rentalRepository;
-    private final CarRepository carRepository;
-    private final ClientRepository clientRepository;
+    private final CarService carService;
+    private final ClientService clientService;
 
 
     @Autowired
-    public RentalService(RentalRepository rentalRepository, CarRepository carRepository, ClientRepository clientRepository) {
+    public RentalService(RentalRepository rentalRepository, CarService carService, ClientService clientService) {
         this.rentalRepository = rentalRepository;
-        this.carRepository = carRepository;
-        this.clientRepository = clientRepository;
+        this.carService = carService;
+        this.clientService = clientService;
     }
 
     @Override
@@ -39,13 +39,10 @@ public class RentalService implements RentalServiceInterface {
 
     @Override
     public void addNewRental(RentalPostDto rental) {
-        Optional<Car> carOptional = this.carRepository.findById(rental.carID());
-        if (carOptional.isEmpty())
-            throw new IllegalStateException("car ID does not exist");
-        Optional<Client> clientOptional = this.clientRepository.findById(rental.clientID());
-        if (clientOptional.isEmpty())
-            throw new IllegalStateException("client ID does not exist");
-        Rental newRental = RentalConverter.fromRentalPostDtotoRental(clientOptional.get(),carOptional.get());
+
+        Car car = carService.getById(rental.carID());
+        Client client = clientService.getById(rental.clientID());
+        Rental newRental = RentalConverter.fromRentalPostDtotoRental(client,car);
         //Rental newRental = new Rental(clientOptional.get(), carOptional.get());
         rentalRepository.save(newRental);
     }

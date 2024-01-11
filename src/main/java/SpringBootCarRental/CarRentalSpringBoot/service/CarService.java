@@ -66,5 +66,13 @@ public class CarService implements CarServiceInterface {
         carRepository.save(carToUpdate);
     }
 
+    public Car getById(Long id){
+        Optional<Car> optionalCar = carRepository.findById(id);
+        if (optionalCar.isEmpty()) {
+            throw new IllegalStateException("Car with id " + id + " does not exist");
+        }
+        return optionalCar.get();
+    }
+
 
 }
