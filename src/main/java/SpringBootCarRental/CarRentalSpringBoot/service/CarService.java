@@ -2,6 +2,7 @@ package SpringBootCarRental.CarRentalSpringBoot.service;
 
 import SpringBootCarRental.CarRentalSpringBoot.converter.CarConverter;
 import SpringBootCarRental.CarRentalSpringBoot.dto.CarDto;
+import SpringBootCarRental.CarRentalSpringBoot.dto.CarUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
 import SpringBootCarRental.CarRentalSpringBoot.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class CarService implements CarServiceInterface {
 
     private final CarRepository carRepository;
+
     @Autowired
     public CarService(CarRepository carRepository) {
         this.carRepository = carRepository;
@@ -46,4 +48,23 @@ public class CarService implements CarServiceInterface {
         }
         carRepository.deleteById(carId);
     }
+
+    @Override
+    public void updateCar(Long id, CarUpdateDto car) {
+        Optional<Car> carOptional = carRepository.findById(id);
+        if (carOptional.isEmpty()) {
+            throw new IllegalStateException("Car with id " + id + " does not exist");
+        }
+
+        Car carToUpdate = carOptional.get();
+        if (car.km() < carToUpdate.getKm()) {
+            throw new IllegalStateException("Cannot decrease km");
+        }
+
+        carToUpdate.setKm(car.km());
+
+        carRepository.save(carToUpdate);
+    }
+
+
 }

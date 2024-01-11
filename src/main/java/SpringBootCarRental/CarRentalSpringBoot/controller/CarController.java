@@ -1,6 +1,7 @@
 package SpringBootCarRental.CarRentalSpringBoot.controller;
 
 import SpringBootCarRental.CarRentalSpringBoot.dto.CarDto;
+import SpringBootCarRental.CarRentalSpringBoot.dto.CarUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
 import SpringBootCarRental.CarRentalSpringBoot.service.CarService;
 import jakarta.validation.Valid;
@@ -38,4 +39,11 @@ public class CarController {
         carService.deleteCar(carId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @PatchMapping(path = "{carID}")
+    public ResponseEntity<Car> updateCar(@PathVariable("carID") Long id, @Valid @RequestBody CarUpdateDto car) {
+        carService.updateCar(id, car);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }

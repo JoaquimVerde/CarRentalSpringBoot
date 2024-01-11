@@ -1,7 +1,9 @@
 package SpringBootCarRental.CarRentalSpringBoot.controller;
 
 import SpringBootCarRental.CarRentalSpringBoot.dto.CarDto;
+import SpringBootCarRental.CarRentalSpringBoot.dto.CarUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.ClientDto;
+import SpringBootCarRental.CarRentalSpringBoot.dto.ClientUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Client;
 import SpringBootCarRental.CarRentalSpringBoot.service.ClientService;
@@ -40,4 +42,12 @@ public class ClientController {
         clientService.deleteClient(clientId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PatchMapping(path = "{clientID}")
+    public ResponseEntity<Car> updateClient(@PathVariable("clientID") Long id, @Valid @RequestBody ClientUpdateDto client) {
+        clientService.updateClient(id, client);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }
