@@ -9,9 +9,9 @@ import java.time.LocalDate;
 public record RentalDto(
 
         @Valid
-        Client client,
+        ClientDto client,
         @Valid
-        Car car,
+        CarDto car,
         @Valid
         LocalDate dateOfRental,
         @Valid

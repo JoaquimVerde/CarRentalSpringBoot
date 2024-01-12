@@ -1,7 +1,6 @@
 package SpringBootCarRental.CarRentalSpringBoot.controller;
 
 import SpringBootCarRental.CarRentalSpringBoot.dto.*;
-import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Rental;
 import SpringBootCarRental.CarRentalSpringBoot.service.RentalService;
 import jakarta.validation.Valid;

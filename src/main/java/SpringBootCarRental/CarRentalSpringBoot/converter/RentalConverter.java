@@ -1,6 +1,7 @@
 package SpringBootCarRental.CarRentalSpringBoot.converter;
 
 import SpringBootCarRental.CarRentalSpringBoot.dto.CarDto;
+import SpringBootCarRental.CarRentalSpringBoot.dto.ClientDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.RentalDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.RentalPostDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
@@ -14,9 +15,10 @@ import java.util.List;
 public class RentalConverter {
 
     public static RentalDto fromRentalToRentalDto(Rental rental){
+
         return new RentalDto(
-                rental.getClient(),
-                rental.getCar(),
+                ClientConverter.fromClientToClientDto(rental.getClient()),
+                CarConverter.fromCarToCarDto(rental.getCar()),
                 rental.getDateOfRental(),
                 rental.getReturnDate()
         );
