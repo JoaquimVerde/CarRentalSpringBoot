@@ -4,7 +4,7 @@ import SpringBootCarRental.CarRentalSpringBoot.converter.ClientConverter;
 import SpringBootCarRental.CarRentalSpringBoot.dto.ClientDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.ClientUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Client;
-import SpringBootCarRental.CarRentalSpringBoot.exceptions.IDException;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
 import SpringBootCarRental.CarRentalSpringBoot.repository.ClientRepository;
 import SpringBootCarRental.CarRentalSpringBoot.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class ClientService implements ClientServiceInterface {
     public void addNewClient(ClientDto client) {
         Optional<Client> clientOptional = this.clientRepository.findClientByEmail(client.email());
         if (clientOptional.isPresent())
-            throw new IDException(Messages.CLIENT_EMAIL_ALREADY_EXISTS);
+            throw new AppExceptions(Messages.CLIENT_EMAIL_ALREADY_EXISTS);
         Client newClient = ClientConverter.fromClientDtoToClient(client);
         clientRepository.save(newClient);
     }
@@ -41,7 +41,7 @@ public class ClientService implements ClientServiceInterface {
     public void deleteClient(Long clientId) {
         boolean exists = clientRepository.existsById(clientId);
         if (!exists) {
-            throw new IDException(Messages.CLIENT_ID_NOT_FOUND + clientId);
+            throw new AppExceptions(Messages.CLIENT_ID_NOT_FOUND + clientId);
         }
         clientRepository.deleteById(clientId);
     }
@@ -50,7 +50,7 @@ public class ClientService implements ClientServiceInterface {
     public void updateClient(Long id, ClientUpdateDto client) {
         Optional<Client> clientOptional = clientRepository.findById(id);
         if (clientOptional.isEmpty()) {
-            throw new IDException(Messages.CLIENT_ID_NOT_FOUND + id);
+            throw new AppExceptions(Messages.CLIENT_ID_NOT_FOUND + id);
         }
 
         Client clientToUpdate = clientOptional.get();
@@ -69,7 +69,7 @@ public class ClientService implements ClientServiceInterface {
     public Client getById(Long id) {
         Optional<Client> optionalClient = clientRepository.findById(id);
         if (optionalClient.isEmpty()) {
-            throw new IDException(Messages.CLIENT_ID_NOT_FOUND + id);
+            throw new AppExceptions(Messages.CLIENT_ID_NOT_FOUND + id);
         }
         return optionalClient.get();
     }

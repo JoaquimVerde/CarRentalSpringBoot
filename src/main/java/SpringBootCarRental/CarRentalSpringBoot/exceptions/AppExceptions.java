@@ -1,8 +1,8 @@
 package SpringBootCarRental.CarRentalSpringBoot.exceptions;
 
-public class IDException extends RuntimeException {
+public class AppExceptions extends RuntimeException {
 
-    public IDException(String message) {
+    public AppExceptions(String message) {
         super(message);
     }
 

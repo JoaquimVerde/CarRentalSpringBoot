@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ClientConverter {
 
-    public static ClientDto fromClientToClientDto(Client client){
+    public static ClientDto fromClientToClientDto(Client client) {
         return new ClientDto(
                 client.getName(),
                 client.getEmail(),

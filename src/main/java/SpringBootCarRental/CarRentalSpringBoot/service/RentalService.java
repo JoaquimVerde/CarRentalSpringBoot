@@ -7,7 +7,7 @@ import SpringBootCarRental.CarRentalSpringBoot.dto.RentalUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Client;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Rental;
-import SpringBootCarRental.CarRentalSpringBoot.exceptions.IDException;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
 import SpringBootCarRental.CarRentalSpringBoot.repository.RentalRepository;
 import SpringBootCarRental.CarRentalSpringBoot.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,15 +54,16 @@ public class RentalService implements RentalServiceInterface {
     public void deleteRental(Long rentalId) {
         boolean exists = rentalRepository.existsById(rentalId);
         if (!exists) {
-            throw new IDException(Messages.RENTAL_ID_NOT_FOUND + rentalId);
+            throw new AppExceptions(Messages.RENTAL_ID_NOT_FOUND + rentalId);
         }
         rentalRepository.deleteById(rentalId);
     }
+
     @Override
     public void updateRental(Long id, RentalUpdateDto rental) {
         Optional<Rental> rentalOptional = rentalRepository.findById(id);
         if (rentalOptional.isEmpty()) {
-            throw new IDException(Messages.RENTAL_ID_NOT_FOUND + id);
+            throw new AppExceptions(Messages.RENTAL_ID_NOT_FOUND + id);
         }
 
         Rental rentalToUpdate = rentalOptional.get();

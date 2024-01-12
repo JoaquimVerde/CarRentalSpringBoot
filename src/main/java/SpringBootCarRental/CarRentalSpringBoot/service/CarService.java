@@ -4,7 +4,7 @@ import SpringBootCarRental.CarRentalSpringBoot.converter.CarConverter;
 import SpringBootCarRental.CarRentalSpringBoot.dto.CarDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.CarUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
-import SpringBootCarRental.CarRentalSpringBoot.exceptions.IDException;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
 import SpringBootCarRental.CarRentalSpringBoot.repository.CarRepository;
 import SpringBootCarRental.CarRentalSpringBoot.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class CarService implements CarServiceInterface {
     public void addNewCar(CarDto car) {
         Optional<Car> carOptional = this.carRepository.findCarByLicensePlate(car.licensePlate());
         if (carOptional.isPresent())
-            throw new IDException(Messages.CAR_PLATES_ALREADY_EXIST);
+            throw new AppExceptions(Messages.CAR_PLATES_ALREADY_EXIST);
         Car newCar = CarConverter.fromCarDtoToCar(car);
         carRepository.save(newCar);
     }
@@ -44,7 +44,7 @@ public class CarService implements CarServiceInterface {
     public void deleteCar(Long carId) {
         boolean exists = carRepository.existsById(carId);
         if (!exists) {
-            throw new IDException(Messages.CAR_ID_NOT_FOUND + carId);
+            throw new AppExceptions(Messages.CAR_ID_NOT_FOUND + carId);
         }
         carRepository.deleteById(carId);
     }
@@ -53,12 +53,12 @@ public class CarService implements CarServiceInterface {
     public void updateCar(Long id, CarUpdateDto car) {
         Optional<Car> carOptional = carRepository.findById(id);
         if (carOptional.isEmpty()) {
-            throw new IDException(Messages.CAR_ID_NOT_FOUND + id);
+            throw new AppExceptions(Messages.CAR_ID_NOT_FOUND + id);
         }
 
         Car carToUpdate = carOptional.get();
         if (car.km() < carToUpdate.getKm()) {
-            throw new IDException(Messages.CANNOT_DECREASE_KM);
+            throw new AppExceptions(Messages.CANNOT_DECREASE_KM);
         }
 
         carToUpdate.setKm(car.km());
@@ -70,7 +70,7 @@ public class CarService implements CarServiceInterface {
     public Car getById(Long id){
         Optional<Car> optionalCar = carRepository.findById(id);
         if (optionalCar.isEmpty()) {
-            throw new IDException(Messages.CAR_ID_NOT_FOUND + id);
+            throw new AppExceptions(Messages.CAR_ID_NOT_FOUND + id);
         }
         return optionalCar.get();
     }

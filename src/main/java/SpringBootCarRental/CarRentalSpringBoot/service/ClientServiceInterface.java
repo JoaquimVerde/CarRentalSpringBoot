@@ -3,7 +3,7 @@ package SpringBootCarRental.CarRentalSpringBoot.service;
 import SpringBootCarRental.CarRentalSpringBoot.dto.ClientDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.ClientUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Client;
-import SpringBootCarRental.CarRentalSpringBoot.exceptions.IDException;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
 
 import java.util.List;
 
@@ -16,5 +16,5 @@ public interface ClientServiceInterface {
 
     void updateClient(Long id, ClientUpdateDto client);
 
-    Client getById(Long id) throws IDException;
+    Client getById(Long id) throws AppExceptions;
 }
