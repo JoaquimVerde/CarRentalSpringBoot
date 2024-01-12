@@ -67,7 +67,7 @@ public class ClientService implements ClientServiceInterface {
     public Client getById(Long id){
         Optional<Client> optionalClient = clientRepository.findById(id);
         if (optionalClient.isEmpty()) {
-            throw new IllegalStateException("Car with id " + id + " does not exist");
+            throw new IllegalStateException("Client with id " + id + " does not exist");
         }
         return optionalClient.get();
     }
