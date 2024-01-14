@@ -18,6 +18,8 @@ public class Car {
     private int km;
     private LocalDate acquisitionDate;
 
+    private double dailyRate;
+
 
 
 
@@ -26,11 +28,12 @@ public class Car {
     public Car() {
     }
 
-    public Car(String brand, String licensePlate, int horsePower, int km) {
+    public Car(String brand, String licensePlate, int horsePower, int km, double dailyRate) {
         this.brand = brand;
         this.licensePlate = licensePlate;
         this.horsePower = horsePower;
         this.km = km;
+        this.dailyRate = dailyRate;
         this.acquisitionDate = LocalDate.now();
 
     }
@@ -83,5 +86,11 @@ public class Car {
         this.acquisitionDate = acquisitionDate;
     }
 
+    public double getDailyRate() {
+        return dailyRate;
+    }
 
+    public void setDailyRate(double dailyRate) {
+        this.dailyRate = dailyRate;
+    }
 }

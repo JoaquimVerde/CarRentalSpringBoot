@@ -17,6 +17,8 @@ public record CarDto(
         @Valid
         int km,
         @Valid
-        LocalDate acquisitionDate
+        LocalDate acquisitionDate,
+        @Valid
+        double dailyRate
 ) {
 }

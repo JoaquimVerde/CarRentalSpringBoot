@@ -15,7 +15,9 @@ public record RentalDto(
         @Valid
         LocalDate dateOfRental,
         @Valid
-        LocalDate returnDate
+        LocalDate returnDate,
+        @Valid
+        double totalPrice
 
 ) {
 }

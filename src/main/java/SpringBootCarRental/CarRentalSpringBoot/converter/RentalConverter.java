@@ -20,7 +20,8 @@ public class RentalConverter {
                 ClientConverter.fromClientToClientDto(rental.getClient()),
                 CarConverter.fromCarToCarDto(rental.getCar()),
                 rental.getDateOfRental(),
-                rental.getReturnDate()
+                rental.getReturnDate(),
+                rental.getTotalPrice()
         );
     }
 

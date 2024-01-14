@@ -7,4 +7,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 @Component
 @ControllerAdvice
 public class AppExceptionHandler {
+
+
 }

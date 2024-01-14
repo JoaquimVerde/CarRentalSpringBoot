@@ -70,6 +70,7 @@ public class RentalService implements RentalServiceInterface {
 
         if(rental.returnDate() != null && rental.returnDate().isAfter(LocalDate.now()) && !rental.returnDate().equals(rentalToUpdate.getReturnDate())){
             rentalToUpdate.setReturnDate(rental.returnDate());
+            rentalToUpdate.setTotalPrice();
         }
 
         rentalRepository.save(rentalToUpdate);

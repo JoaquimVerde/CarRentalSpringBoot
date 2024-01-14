@@ -1,8 +1,10 @@
 package SpringBootCarRental.CarRentalSpringBoot.entity;
 
 import jakarta.persistence.*;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table
@@ -21,6 +23,8 @@ public class Rental {
 
     private LocalDate returnDate;
 
+    private double totalPrice;
+
 
 
     public Rental() {
@@ -31,6 +35,7 @@ public class Rental {
         this.car = car;
         this.dateOfRental = LocalDate.now();
         this.returnDate = returnDate;
+        setTotalPrice();
     }
 
     public Long getId() {
@@ -71,5 +76,13 @@ public class Rental {
 
     public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice() {
+        totalPrice = dateOfRental.until(getReturnDate(), ChronoUnit.DAYS)*car.getDailyRate();
     }
 }

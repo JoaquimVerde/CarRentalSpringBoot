@@ -12,6 +12,8 @@ public class CarBuilder {
     private int horsePower;
     private int km;
     private LocalDate acquisitionDate;
+    private double dailyRate;
+
 
 
     public void setBrand(String brand) {
@@ -34,7 +36,11 @@ public class CarBuilder {
         this.acquisitionDate = acquisitionDate;
     }
 
+    public void setDailyRate(double dailyRate) {
+        this.dailyRate = dailyRate;
+    }
+
     public Car getResult(){
-        return new Car(brand, licensePlate, horsePower, km);
+        return new Car(brand, licensePlate, horsePower, km, dailyRate);
     }
 }
