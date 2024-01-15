@@ -46,7 +46,8 @@ public class RentalService implements RentalServiceInterface {
             throw new AppExceptions(Messages.UNAVAILABLE_TO_RENTED.getMessage());
         }
         Client client = clientService.getById(rental.clientID());
-        Rental newRental = RentalConverter.fromRentalPostDtotoRental(client, car, rental.returnDate());
+
+        Rental newRental = new Rental(client, car, rental.returnDate());
 
         rentalRepository.save(newRental);
     }

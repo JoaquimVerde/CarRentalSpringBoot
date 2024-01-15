@@ -29,9 +29,5 @@ public class RentalConverter {
         return rentals.stream().map(RentalConverter::fromRentalToRentalDto).toList();
     }
 
-    public static Rental fromRentalPostDtotoRental (Client client, Car car, LocalDate returnDate){
-        return new Rental(client, car, returnDate);
-    }
-
 
 }

@@ -5,6 +5,7 @@ import SpringBootCarRental.CarRentalSpringBoot.dto.CarDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.CarUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
+import SpringBootCarRental.CarRentalSpringBoot.mapper.CarMapper;
 import SpringBootCarRental.CarRentalSpringBoot.repository.CarRepository;
 import SpringBootCarRental.CarRentalSpringBoot.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,14 @@ import java.util.Optional;
 @Service
 public class CarService implements CarServiceInterface {
 
-    private final CarRepository carRepository;
+
+    private CarRepository carRepository;
+
 
     @Autowired
     public CarService(CarRepository carRepository) {
         this.carRepository = carRepository;
     }
-
 
     @Override
     public List<CarDto> getCars() {
