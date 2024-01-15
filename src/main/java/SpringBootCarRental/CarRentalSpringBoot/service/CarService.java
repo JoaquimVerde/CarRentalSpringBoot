@@ -62,6 +62,7 @@ public class CarService implements CarServiceInterface {
         }
 
         carToUpdate.setKm(car.km());
+        carToUpdate.setAvailability(car.availability());
 
         carRepository.save(carToUpdate);
     }

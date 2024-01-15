@@ -42,6 +42,9 @@ public class RentalService implements RentalServiceInterface {
     public void addNewRental(RentalPostDto rental) {
 
         Car car = carService.getById(rental.carID());
+        if(car.getAvailability().equals("Unavailable")){
+            throw new AppExceptions(Messages.UNAVAILABLE_TO_RENT);
+        }
         Client client = clientService.getById(rental.clientID());
         Rental newRental = RentalConverter.fromRentalPostDtotoRental(client, car, rental.returnDate());
 

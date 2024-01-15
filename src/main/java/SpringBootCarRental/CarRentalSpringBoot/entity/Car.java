@@ -19,6 +19,7 @@ public class Car {
     private LocalDate acquisitionDate;
 
     private double dailyRate;
+    private String availability;
 
 
 
@@ -35,6 +36,7 @@ public class Car {
         this.km = km;
         this.dailyRate = dailyRate;
         this.acquisitionDate = LocalDate.now();
+        this.availability = "Available";
 
     }
 
@@ -92,5 +94,13 @@ public class Car {
 
     public void setDailyRate(double dailyRate) {
         this.dailyRate = dailyRate;
+    }
+
+    public String getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(String availability) {
+        this.availability = availability;
     }
 }

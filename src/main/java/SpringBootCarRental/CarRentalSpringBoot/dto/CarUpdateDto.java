@@ -5,6 +5,8 @@ import jakarta.validation.Valid;
 
 public record CarUpdateDto(
         @Valid
-        int km
+        int km,
+        @Valid
+        String availability
 ) {
 }

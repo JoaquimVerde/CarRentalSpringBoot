@@ -12,4 +12,9 @@ public class Messages {
 
     public final static String CANNOT_DECREASE_KM = "Cannot decrease km";
 
+    public final static String UNAVAILABLE_TO_RENT = "Car unavailable to rent";
+
+
+
+
 }

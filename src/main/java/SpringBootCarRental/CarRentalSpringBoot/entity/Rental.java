@@ -36,6 +36,7 @@ public class Rental {
         this.dateOfRental = LocalDate.now();
         this.returnDate = returnDate;
         setTotalPrice();
+        car.setAvailability("Unavailable");
     }
 
     public Long getId() {
