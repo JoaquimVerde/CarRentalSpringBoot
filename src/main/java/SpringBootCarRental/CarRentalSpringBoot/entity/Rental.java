@@ -20,10 +20,9 @@ public class Rental {
     private Car car;
 
     private LocalDate dateOfRental;
-
     private LocalDate returnDate;
-
     private double totalPrice;
+    private boolean isTerminated;
 
 
 
@@ -36,8 +35,11 @@ public class Rental {
         this.dateOfRental = LocalDate.now();
         this.returnDate = returnDate;
         setTotalPrice();
-        car.setAvailability("Unavailable");
+        car.setAvailable(false);
+        car.setHasARegisteredRental(true);
+        client.setHasARegisteredRental(true);
     }
+
 
     public Long getId() {
         return id;
@@ -85,5 +87,13 @@ public class Rental {
 
     public void setTotalPrice() {
         totalPrice = dateOfRental.until(getReturnDate(), ChronoUnit.DAYS)*car.getDailyRate();
+    }
+
+    public boolean isTerminated() {
+        return isTerminated;
+    }
+
+    public void setTerminated(boolean terminated) {
+        isTerminated = terminated;
     }
 }

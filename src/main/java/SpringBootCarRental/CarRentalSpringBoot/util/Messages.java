@@ -8,7 +8,9 @@ public enum Messages {
     CLIENT_EMAIL_ALREADY_EXISTS ("Client Email already exists"),
     CAR_PLATES_ALREADY_EXIST ("Car license plate already exists"),
     CANNOT_DECREASE_KM ("Cannot decrease km"),
-    UNAVAILABLE_TO_RENT("Car unavailable to rent");
+    UNAVAILABLE_TO_RENT("Car unavailable to rent"),
+    CANNOT_DELETE_CAR("Cannot delete this car: "),
+    CANNOT_DELETE_CLIENT("Cannot delete this client: ");
 
     private String message;
 

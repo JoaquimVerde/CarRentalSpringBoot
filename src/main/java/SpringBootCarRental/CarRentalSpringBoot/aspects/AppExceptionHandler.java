@@ -1,9 +1,6 @@
 package SpringBootCarRental.CarRentalSpringBoot.aspects;
 
-import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
-import SpringBootCarRental.CarRentalSpringBoot.exceptions.CarIdNotFoundException;
-import SpringBootCarRental.CarRentalSpringBoot.exceptions.ClientIdNotFoundException;
-import SpringBootCarRental.CarRentalSpringBoot.exceptions.RentalIdNotFoundException;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.*;
 import SpringBootCarRental.CarRentalSpringBoot.util.Messages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +35,12 @@ public class AppExceptionHandler {
     @ExceptionHandler(value = {CarIdNotFoundException.class})
     public ResponseEntity<String> CarIdNotFound(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No such Car ID.");
+    }
+
+    @ExceptionHandler(value = {CannotDeleteException.class})
+    public ResponseEntity<String> CannotDelete(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("The Car or Client already has a registered rental and therefore cannot be deleted.");
     }
 
 

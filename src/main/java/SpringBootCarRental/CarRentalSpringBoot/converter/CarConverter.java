@@ -17,7 +17,7 @@ public class CarConverter {
                 car.getKm(),
                 car.getAcquisitionDate(),
                 car.getDailyRate(),
-                car.getAvailability()
+                car.isAvailable()
         );
     }
     public static List<CarDto> ListCarToListCarDto(List<Car> cars){

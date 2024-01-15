@@ -21,6 +21,6 @@ public record CarDto(
         @Valid
         double dailyRate,
         @Valid
-        String availability
+        boolean isAvailable
 ) {
 }

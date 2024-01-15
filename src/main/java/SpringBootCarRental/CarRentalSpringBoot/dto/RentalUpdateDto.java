@@ -7,6 +7,8 @@ import java.time.LocalDate;
 public record RentalUpdateDto(
 
         @Valid
-        LocalDate returnDate
+        LocalDate returnDate,
+        @Valid
+        boolean isTerminated
 ) {
 }

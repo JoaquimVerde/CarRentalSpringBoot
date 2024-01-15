@@ -19,7 +19,8 @@ public class Car {
     private LocalDate acquisitionDate;
 
     private double dailyRate;
-    private String availability;
+    private boolean isAvailable;
+    private boolean HasARegisteredRental;
 
 
 
@@ -36,7 +37,7 @@ public class Car {
         this.km = km;
         this.dailyRate = dailyRate;
         this.acquisitionDate = LocalDate.now();
-        this.availability = "Available";
+        setAvailable(true);
 
     }
 
@@ -96,11 +97,19 @@ public class Car {
         this.dailyRate = dailyRate;
     }
 
-    public String getAvailability() {
-        return availability;
+    public boolean isAvailable() {
+        return isAvailable;
     }
 
-    public void setAvailability(String availability) {
-        this.availability = availability;
+    public void setAvailable(boolean available) {
+        this.isAvailable = available;
+    }
+
+    public boolean HasARegisteredRental() {
+        return HasARegisteredRental;
+    }
+
+    public void setHasARegisteredRental(boolean hasARegisteredRental) {
+        HasARegisteredRental = hasARegisteredRental;
     }
 }

@@ -17,7 +17,9 @@ public record RentalDto(
         @Valid
         LocalDate returnDate,
         @Valid
-        double totalPrice
+        double totalPrice,
+        @Valid
+        boolean isTerminated
 
 ) {
 }

@@ -21,7 +21,8 @@ public class RentalConverter {
                 CarConverter.fromCarToCarDto(rental.getCar()),
                 rental.getDateOfRental(),
                 rental.getReturnDate(),
-                rental.getTotalPrice()
+                rental.getTotalPrice(),
+                rental.isTerminated()
         );
     }
 

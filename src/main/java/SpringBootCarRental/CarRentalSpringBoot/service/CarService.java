@@ -5,6 +5,7 @@ import SpringBootCarRental.CarRentalSpringBoot.dto.CarDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.CarUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.CannotDeleteException;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.CarIdNotFoundException;
 import SpringBootCarRental.CarRentalSpringBoot.mapper.CarMapper;
 import SpringBootCarRental.CarRentalSpringBoot.repository.CarRepository;
@@ -45,9 +46,12 @@ public class CarService implements CarServiceInterface {
 
     @Override
     public void deleteCar(Long carId) {
-        boolean exists = carRepository.existsById(carId);
-        if (!exists) {
+
+        if (!carRepository.existsById(carId)) {
             throw new CarIdNotFoundException(Messages.CAR_ID_NOT_FOUND.getMessage() + carId);
+        }
+        if(carRepository.getById(carId).HasARegisteredRental()){
+            throw new CannotDeleteException(Messages.CANNOT_DELETE_CAR.getMessage() + carId);
         }
         carRepository.deleteById(carId);
     }
@@ -65,7 +69,6 @@ public class CarService implements CarServiceInterface {
         }
 
         carToUpdate.setKm(car.km());
-        carToUpdate.setAvailability(car.availability());
 
         carRepository.save(carToUpdate);
     }

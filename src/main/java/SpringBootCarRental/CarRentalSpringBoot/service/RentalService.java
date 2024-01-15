@@ -43,7 +43,7 @@ public class RentalService implements RentalServiceInterface {
     public void addNewRental(RentalPostDto rental) {
 
         Car car = carService.getById(rental.carID());
-        if(car.getAvailability().equals("Unavailable")){
+        if(!car.isAvailable()){
             throw new AppExceptions(Messages.UNAVAILABLE_TO_RENT.getMessage());
         }
         Client client = clientService.getById(rental.clientID());
@@ -55,10 +55,11 @@ public class RentalService implements RentalServiceInterface {
 
     @Override
     public void deleteRental(Long rentalId) {
-        boolean exists = rentalRepository.existsById(rentalId);
-        if (!exists) {
+
+        if (!rentalRepository.existsById(rentalId)) {
             throw new RentalIdNotFoundException(Messages.RENTAL_ID_NOT_FOUND.getMessage() + rentalId);
         }
+
         rentalRepository.deleteById(rentalId);
     }
 
@@ -74,6 +75,10 @@ public class RentalService implements RentalServiceInterface {
         if(rental.returnDate() != null && rental.returnDate().isAfter(LocalDate.now()) && !rental.returnDate().equals(rentalToUpdate.getReturnDate())){
             rentalToUpdate.setReturnDate(rental.returnDate());
             rentalToUpdate.setTotalPrice();
+        }
+        rentalToUpdate.setTerminated(rental.isTerminated());
+        if(rentalToUpdate.isTerminated()){
+            rentalToUpdate.getCar().setAvailable(true);
         }
 
         rentalRepository.save(rentalToUpdate);

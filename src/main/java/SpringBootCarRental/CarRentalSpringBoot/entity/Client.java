@@ -19,6 +19,8 @@ public class Client {
     @Column(unique = true)
     private int nif;
     private LocalDate dateOfBirth;
+    private boolean HasARegisteredRental;
+
 
 
 
@@ -81,4 +83,10 @@ public class Client {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public boolean HasARegisteredRental() {
+        return HasARegisteredRental;
+    }
+    public void setHasARegisteredRental(boolean hasARegisteredRental) {
+        HasARegisteredRental = hasARegisteredRental;
+    }
 }

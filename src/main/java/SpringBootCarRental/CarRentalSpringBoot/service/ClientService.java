@@ -5,6 +5,7 @@ import SpringBootCarRental.CarRentalSpringBoot.dto.ClientDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.ClientUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Client;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.CannotDeleteException;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.ClientIdNotFoundException;
 import SpringBootCarRental.CarRentalSpringBoot.repository.ClientRepository;
 import SpringBootCarRental.CarRentalSpringBoot.util.Messages;
@@ -40,9 +41,12 @@ public class ClientService implements ClientServiceInterface {
 
     @Override
     public void deleteClient(Long clientId) {
-        boolean exists = clientRepository.existsById(clientId);
-        if (!exists) {
+
+        if (!clientRepository.existsById(clientId)) {
             throw new ClientIdNotFoundException(Messages.CLIENT_ID_NOT_FOUND.getMessage() + clientId);
+        }
+        if(clientRepository.getById(clientId).HasARegisteredRental()){
+            throw new CannotDeleteException(Messages.CANNOT_DELETE_CLIENT.getMessage() + clientId);
         }
         clientRepository.deleteById(clientId);
     }
