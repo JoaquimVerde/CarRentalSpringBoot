@@ -19,6 +19,8 @@ public record CarDto(
         @Valid
         LocalDate acquisitionDate,
         @Valid
-        double dailyRate
+        double dailyRate,
+        @Valid
+        String availability
 ) {
 }
