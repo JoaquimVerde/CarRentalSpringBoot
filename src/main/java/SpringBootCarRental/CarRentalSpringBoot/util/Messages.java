@@ -1,20 +1,22 @@
 package SpringBootCarRental.CarRentalSpringBoot.util;
 
-public class Messages {
+public enum Messages {
 
-    public final static String CAR_ID_NOT_FOUND = "Car Id not found: ";
-    public final static String CLIENT_ID_NOT_FOUND = "Client Id not found: ";
-    public final static String RENTAL_ID_NOT_FOUND = "Rental Id not found: ";
+    CAR_ID_NOT_FOUND ("Car Id not found: "),
+    CLIENT_ID_NOT_FOUND ("Client Id not found: "),
+    RENTAL_ID_NOT_FOUND ("Rental Id not found: "),
+    CLIENT_EMAIL_ALREADY_EXISTS ("Client Email already exists"),
+    CAR_PLATES_ALREADY_EXIST ("Car license plate already exists"),
+    CANNOT_DECREASE_KM ("Cannot decrease km"),
+    UNAVAILABLE_TO_RENTED ("Car unavailable to rent");
 
-    public final static String CLIENT_EMAIL_ALREADY_EXISTS = "Client Email already exists";
+    private String message;
 
-    public final static String CAR_PLATES_ALREADY_EXIST = "Car license plate already exists";
+    Messages(String message) {
+        this.message = message;
+    }
 
-    public final static String CANNOT_DECREASE_KM = "Cannot decrease km";
-
-    public final static String UNAVAILABLE_TO_RENT = "Car unavailable to rent";
-
-
-
-
+    public String getMessage() {
+        return message;
+    }
 }
