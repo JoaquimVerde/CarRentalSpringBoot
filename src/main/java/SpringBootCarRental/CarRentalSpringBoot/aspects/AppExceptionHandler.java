@@ -1,6 +1,10 @@
 package SpringBootCarRental.CarRentalSpringBoot.aspects;
 
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.CarIdNotFoundException;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.ClientIdNotFoundException;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.RentalIdNotFoundException;
+import SpringBootCarRental.CarRentalSpringBoot.util.Messages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -18,7 +22,22 @@ public class AppExceptionHandler {
 
     @ExceptionHandler(value = {AppExceptions.class})
     public ResponseEntity<String> AppException(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An App error occurred.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An app error has occurred");
+    }
+
+    @ExceptionHandler(value = {RentalIdNotFoundException.class})
+    public ResponseEntity<String> RentalIdNotFound(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No such Rental ID.");
+    }
+
+    @ExceptionHandler(value = {ClientIdNotFoundException.class})
+    public ResponseEntity<String> ClientIdNotFound(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No such Client ID.");
+    }
+
+    @ExceptionHandler(value = {CarIdNotFoundException.class})
+    public ResponseEntity<String> CarIdNotFound(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No such Car ID.");
     }
 
 

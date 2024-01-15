@@ -5,6 +5,7 @@ import SpringBootCarRental.CarRentalSpringBoot.dto.CarDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.CarUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.CarIdNotFoundException;
 import SpringBootCarRental.CarRentalSpringBoot.mapper.CarMapper;
 import SpringBootCarRental.CarRentalSpringBoot.repository.CarRepository;
 import SpringBootCarRental.CarRentalSpringBoot.util.Messages;
@@ -46,7 +47,7 @@ public class CarService implements CarServiceInterface {
     public void deleteCar(Long carId) {
         boolean exists = carRepository.existsById(carId);
         if (!exists) {
-            throw new AppExceptions(Messages.CAR_ID_NOT_FOUND.getMessage() + carId);
+            throw new CarIdNotFoundException(Messages.CAR_ID_NOT_FOUND.getMessage() + carId);
         }
         carRepository.deleteById(carId);
     }
@@ -55,7 +56,7 @@ public class CarService implements CarServiceInterface {
     public void updateCar(Long id, CarUpdateDto car) {
         Optional<Car> carOptional = carRepository.findById(id);
         if (carOptional.isEmpty()) {
-            throw new AppExceptions(Messages.CAR_ID_NOT_FOUND.getMessage() + id);
+            throw new CarIdNotFoundException(Messages.CAR_ID_NOT_FOUND.getMessage() + id);
         }
 
         Car carToUpdate = carOptional.get();
@@ -73,7 +74,7 @@ public class CarService implements CarServiceInterface {
     public Car getById(Long id){
         Optional<Car> optionalCar = carRepository.findById(id);
         if (optionalCar.isEmpty()) {
-            throw new AppExceptions(Messages.CAR_ID_NOT_FOUND.getMessage() + id);
+            throw new CarIdNotFoundException(Messages.CAR_ID_NOT_FOUND.getMessage() + id);
         }
         return optionalCar.get();
     }

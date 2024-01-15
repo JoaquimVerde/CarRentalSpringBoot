@@ -13,7 +13,7 @@ public record ClientDto(
         String name,
         @Valid
         @NotBlank(message = "Email is mandatory!")
-        @Email
+        @Email(message = "Email not valid!")
         String email,
         @Valid
         int driverLicense,

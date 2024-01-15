@@ -5,6 +5,7 @@ import SpringBootCarRental.CarRentalSpringBoot.dto.ClientDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.ClientUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Client;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.ClientIdNotFoundException;
 import SpringBootCarRental.CarRentalSpringBoot.repository.ClientRepository;
 import SpringBootCarRental.CarRentalSpringBoot.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class ClientService implements ClientServiceInterface {
     public void deleteClient(Long clientId) {
         boolean exists = clientRepository.existsById(clientId);
         if (!exists) {
-            throw new AppExceptions(Messages.CLIENT_ID_NOT_FOUND.getMessage() + clientId);
+            throw new ClientIdNotFoundException(Messages.CLIENT_ID_NOT_FOUND.getMessage() + clientId);
         }
         clientRepository.deleteById(clientId);
     }
@@ -50,7 +51,7 @@ public class ClientService implements ClientServiceInterface {
     public void updateClient(Long id, ClientUpdateDto client) {
         Optional<Client> clientOptional = clientRepository.findById(id);
         if (clientOptional.isEmpty()) {
-            throw new AppExceptions(Messages.CLIENT_ID_NOT_FOUND.getMessage() + id);
+            throw new ClientIdNotFoundException(Messages.CLIENT_ID_NOT_FOUND.getMessage() + id);
         }
 
         Client clientToUpdate = clientOptional.get();
@@ -69,7 +70,7 @@ public class ClientService implements ClientServiceInterface {
     public Client getById(Long id) {
         Optional<Client> optionalClient = clientRepository.findById(id);
         if (optionalClient.isEmpty()) {
-            throw new AppExceptions(Messages.CLIENT_ID_NOT_FOUND.getMessage() + id);
+            throw new ClientIdNotFoundException(Messages.CLIENT_ID_NOT_FOUND.getMessage() + id);
         }
         return optionalClient.get();
     }

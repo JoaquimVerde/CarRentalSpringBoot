@@ -8,6 +8,7 @@ import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Client;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Rental;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.RentalIdNotFoundException;
 import SpringBootCarRental.CarRentalSpringBoot.repository.RentalRepository;
 import SpringBootCarRental.CarRentalSpringBoot.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class RentalService implements RentalServiceInterface {
 
         Car car = carService.getById(rental.carID());
         if(car.getAvailability().equals("Unavailable")){
-            throw new AppExceptions(Messages.UNAVAILABLE_TO_RENTED.getMessage());
+            throw new AppExceptions(Messages.UNAVAILABLE_TO_RENT.getMessage());
         }
         Client client = clientService.getById(rental.clientID());
 
@@ -56,7 +57,7 @@ public class RentalService implements RentalServiceInterface {
     public void deleteRental(Long rentalId) {
         boolean exists = rentalRepository.existsById(rentalId);
         if (!exists) {
-            throw new AppExceptions(Messages.RENTAL_ID_NOT_FOUND.getMessage() + rentalId);
+            throw new RentalIdNotFoundException(Messages.RENTAL_ID_NOT_FOUND.getMessage() + rentalId);
         }
         rentalRepository.deleteById(rentalId);
     }
@@ -65,7 +66,7 @@ public class RentalService implements RentalServiceInterface {
     public void updateRental(Long id, RentalUpdateDto rental) {
         Optional<Rental> rentalOptional = rentalRepository.findById(id);
         if (rentalOptional.isEmpty()) {
-            throw new AppExceptions(Messages.RENTAL_ID_NOT_FOUND.getMessage() + id);
+            throw new RentalIdNotFoundException(Messages.RENTAL_ID_NOT_FOUND.getMessage() + id);
         }
 
         Rental rentalToUpdate = rentalOptional.get();
