@@ -51,6 +51,18 @@ public class AppExceptionHandler {
                 .body("The Email already exists in database.");
     }
 
+    @ExceptionHandler(value = {CarUnavailableException.class})
+    public ResponseEntity<String> CarUnavailable(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("The car is unavailable to rent.");
+    }
+
+    @ExceptionHandler(value = {CannotDecreaseKmException.class})
+    public ResponseEntity<String> CannotDecreaseKm(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Cannot decrease km in cars.");
+    }
+
 
 
 

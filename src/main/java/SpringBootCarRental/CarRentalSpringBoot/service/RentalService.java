@@ -8,6 +8,7 @@ import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Client;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Rental;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.CarUnavailableException;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.RentalIdNotFoundException;
 import SpringBootCarRental.CarRentalSpringBoot.repository.RentalRepository;
 import SpringBootCarRental.CarRentalSpringBoot.util.Messages;
@@ -44,7 +45,7 @@ public class RentalService implements RentalServiceInterface {
 
         Car car = carService.getById(rental.carID());
         if(!car.isAvailable()){
-            throw new AppExceptions(Messages.UNAVAILABLE_TO_RENT.getMessage());
+            throw new CarUnavailableException(Messages.UNAVAILABLE_TO_RENT.getMessage());
         }
         Client client = clientService.getById(rental.clientID());
 

@@ -4,10 +4,7 @@ import SpringBootCarRental.CarRentalSpringBoot.converter.CarConverter;
 import SpringBootCarRental.CarRentalSpringBoot.dto.CarDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.CarUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
-import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
-import SpringBootCarRental.CarRentalSpringBoot.exceptions.CannotDeleteException;
-import SpringBootCarRental.CarRentalSpringBoot.exceptions.CarIdNotFoundException;
-import SpringBootCarRental.CarRentalSpringBoot.exceptions.CarPlatesAlreadyExistException;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.*;
 import SpringBootCarRental.CarRentalSpringBoot.mapper.CarMapper;
 import SpringBootCarRental.CarRentalSpringBoot.repository.CarRepository;
 import SpringBootCarRental.CarRentalSpringBoot.util.Messages;
@@ -66,7 +63,7 @@ public class CarService implements CarServiceInterface {
 
         Car carToUpdate = carOptional.get();
         if (car.km() < carToUpdate.getKm()) {
-            throw new AppExceptions(Messages.CANNOT_DECREASE_KM.getMessage());
+            throw new CannotDecreaseKmException(Messages.CANNOT_DECREASE_KM.getMessage());
         }
 
         carToUpdate.setKm(car.km());
