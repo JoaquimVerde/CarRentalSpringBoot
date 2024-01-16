@@ -10,7 +10,7 @@ import java.util.List;
 public interface CarServiceInterface {
     List<CarDto> getCars();
 
-    void addNewCar(CarDto car);
+    Car addNewCar(CarDto car);
 
     void deleteCar(Long carId);
 

@@ -28,8 +28,8 @@ public class RentalController {
 
     @PostMapping("/")
     public ResponseEntity<Rental> addNewRental(@Valid @RequestBody RentalPostDto rental) {
-        rentalService.addNewRental(rental);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+
+        return new ResponseEntity<>(rentalService.addNewRental(rental), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "{rentalId}")

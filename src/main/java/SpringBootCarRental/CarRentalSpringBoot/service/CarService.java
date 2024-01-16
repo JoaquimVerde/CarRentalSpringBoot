@@ -34,12 +34,12 @@ public class CarService implements CarServiceInterface {
     }
 
     @Override
-    public void addNewCar(CarDto car) {
+    public Car addNewCar(CarDto car) {
         Optional<Car> carOptional = this.carRepository.findCarByLicensePlate(car.licensePlate());
         if (carOptional.isPresent())
             throw new CarPlatesAlreadyExistException(Messages.CAR_PLATES_ALREADY_EXIST.getMessage());
         Car newCar = CarConverter.fromCarDtoToCar(car);
-        carRepository.save(newCar);
+        return carRepository.save(newCar);
     }
 
     @Override

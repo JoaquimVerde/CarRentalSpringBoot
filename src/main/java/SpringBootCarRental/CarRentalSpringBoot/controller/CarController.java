@@ -30,8 +30,8 @@ public class CarController {
 
     @PostMapping("/")
     public ResponseEntity<Car> addNewCar(@Valid @RequestBody CarDto car) {
-        carService.addNewCar(car);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+
+        return new ResponseEntity<>(carService.addNewCar(car), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "{carId}")

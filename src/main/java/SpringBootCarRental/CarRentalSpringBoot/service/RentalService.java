@@ -40,7 +40,7 @@ public class RentalService implements RentalServiceInterface {
     }
 
     @Override
-    public void addNewRental(RentalPostDto rental) {
+    public Rental addNewRental(RentalPostDto rental) {
 
         Car car = carService.getById(rental.carID());
         if(!car.isAvailable()){
@@ -50,7 +50,7 @@ public class RentalService implements RentalServiceInterface {
 
         Rental newRental = new Rental(client, car, rental.returnDate());
 
-        rentalRepository.save(newRental);
+        return rentalRepository.save(newRental);
     }
 
     @Override

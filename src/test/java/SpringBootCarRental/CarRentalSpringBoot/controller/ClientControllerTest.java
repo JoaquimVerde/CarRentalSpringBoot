@@ -1,4 +1,4 @@
-package SpringBootCarRental.CarRentalSpringBoot;
+package SpringBootCarRental.CarRentalSpringBoot.controller;
 
 import SpringBootCarRental.CarRentalSpringBoot.entity.Client;
 import SpringBootCarRental.CarRentalSpringBoot.repository.ClientRepository;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class CarRentalSpringBootApplicationTests {
+class ClientControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -60,7 +60,7 @@ class CarRentalSpringBootApplicationTests {
 	}
 
 	@Test
-	@DisplayName("Test create a client when student returns status code 201")
+	@DisplayName("Test create a client when client returns status code 201")
 	public void testCreateClientReturnCreateAndGetIdEqualsTo1() throws Exception {
 
 		//Given
@@ -79,7 +79,7 @@ class CarRentalSpringBootApplicationTests {
 
 		Client client = objectMapper.readValue(responseContent, Client.class);
 
-		//assert student id and name using matchers
+		//assert client id and name using matchers
 		assertThat(client.getId()).isEqualTo(1L);
 		assertThat(client.getName()).isEqualTo("Joao");
 		assertThat(client.getEmail()).isEqualTo("j@eee.com");
