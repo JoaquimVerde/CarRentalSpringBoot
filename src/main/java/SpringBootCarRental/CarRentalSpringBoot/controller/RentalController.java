@@ -44,4 +44,9 @@ public class RentalController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping(path = "{rentalId}")
+    public ResponseEntity<RentalDto> getRentalDtoById(@PathVariable("rentalId") Long rentalId) {
+        return new ResponseEntity<>(rentalService.getRentalDtoById(rentalId), HttpStatus.OK);
+    }
+
 }

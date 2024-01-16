@@ -10,11 +10,13 @@ import java.util.List;
 public interface ClientServiceInterface {
     List<ClientDto> getClients();
 
-    void addNewClient(ClientDto client);
+    Client addNewClient(ClientDto client);
 
     void deleteClient(Long clientId);
 
     void updateClient(Long id, ClientUpdateDto client);
 
     Client getById(Long id) throws AppExceptions;
+
+    ClientDto getClientDtoById(Long id);
 }

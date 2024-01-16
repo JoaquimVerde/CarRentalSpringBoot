@@ -7,7 +7,6 @@ import SpringBootCarRental.CarRentalSpringBoot.dto.RentalUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Client;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Rental;
-import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.CarUnavailableException;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.RentalIdNotFoundException;
 import SpringBootCarRental.CarRentalSpringBoot.repository.RentalRepository;
@@ -83,6 +82,15 @@ public class RentalService implements RentalServiceInterface {
         }
 
         rentalRepository.save(rentalToUpdate);
+    }
+
+    @Override
+    public RentalDto getRentalDtoById(Long id){
+        Optional<Rental> optionalRental = rentalRepository.findById(id);
+        if (optionalRental.isEmpty()) {
+            throw new RentalIdNotFoundException(Messages.RENTAL_ID_NOT_FOUND.getMessage() + id);
+        }
+        return RentalConverter.fromRentalToRentalDto(optionalRental.get());
     }
 
 }

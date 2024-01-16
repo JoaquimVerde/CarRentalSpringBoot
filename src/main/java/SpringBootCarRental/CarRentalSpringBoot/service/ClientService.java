@@ -31,12 +31,12 @@ public class ClientService implements ClientServiceInterface {
     }
 
     @Override
-    public void addNewClient(ClientDto client) {
+    public Client addNewClient(ClientDto client) {
         Optional<Client> clientOptional = this.clientRepository.findClientByEmail(client.email());
         if (clientOptional.isPresent())
             throw new EmailAlreadyExistsException(Messages.CLIENT_EMAIL_ALREADY_EXISTS.getMessage());
         Client newClient = ClientConverter.fromClientDtoToClient(client);
-        clientRepository.save(newClient);
+        return clientRepository.save(newClient);
     }
 
     @Override
@@ -77,6 +77,15 @@ public class ClientService implements ClientServiceInterface {
             throw new ClientIdNotFoundException(Messages.CLIENT_ID_NOT_FOUND.getMessage() + id);
         }
         return optionalClient.get();
+    }
+
+    @Override
+    public ClientDto getClientDtoById(Long id){
+        Optional<Client> optionalClient = clientRepository.findById(id);
+        if (optionalClient.isEmpty()) {
+            throw new ClientIdNotFoundException(Messages.CLIENT_ID_NOT_FOUND.getMessage() + id);
+        }
+        return ClientConverter.fromClientToClientDto(optionalClient.get());
     }
 
 

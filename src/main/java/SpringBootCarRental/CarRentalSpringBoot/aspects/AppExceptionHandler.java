@@ -20,46 +20,46 @@ public class AppExceptionHandler {
 
     @ExceptionHandler(value = {RentalIdNotFoundException.class})
     public ResponseEntity<String> RentalIdNotFound(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No such Rental ID.");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such Rental ID.");
     }
 
     @ExceptionHandler(value = {ClientIdNotFoundException.class})
     public ResponseEntity<String> ClientIdNotFound(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No such Client ID.");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such Client ID.");
     }
 
     @ExceptionHandler(value = {CarIdNotFoundException.class})
     public ResponseEntity<String> CarIdNotFound(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No such Car ID.");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such Car ID.");
     }
 
     @ExceptionHandler(value = {CannotDeleteException.class})
     public ResponseEntity<String> CannotDelete(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .body("The Car or Client already has a registered rental and therefore cannot be deleted.");
     }
 
     @ExceptionHandler(value = {CarPlatesAlreadyExistException.class})
     public ResponseEntity<String> CarPlatesAlreadyExist(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body("The Car Plates already exist in database.");
     }
 
     @ExceptionHandler(value = {EmailAlreadyExistsException.class})
     public ResponseEntity<String> EmailAlreadyExists(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body("The Email already exists in database.");
     }
 
     @ExceptionHandler(value = {CarUnavailableException.class})
     public ResponseEntity<String> CarUnavailable(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body("The car is unavailable to rent.");
     }
 
     @ExceptionHandler(value = {CannotDecreaseKmException.class})
     public ResponseEntity<String> CannotDecreaseKm(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body("Cannot decrease km in cars.");
     }
 

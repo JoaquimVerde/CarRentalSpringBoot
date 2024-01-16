@@ -33,8 +33,8 @@ public class ClientController {
 
    @PostMapping("/")
     public ResponseEntity<Client> addNewClient(@Valid @RequestBody ClientDto client) {
-        clientService.addNewClient(client);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+
+        return new ResponseEntity<>(clientService.addNewClient(client), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "{clientId}")
@@ -47,6 +47,11 @@ public class ClientController {
     public ResponseEntity<Car> updateClient(@PathVariable("clientID") Long id, @Valid @RequestBody ClientUpdateDto client) {
         clientService.updateClient(id, client);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(path = "{clientId}")
+    public ResponseEntity<ClientDto> getClientDtoById(@PathVariable("clientId") Long clientId) {
+        return new ResponseEntity<>(clientService.getClientDtoById(clientId), HttpStatus.OK);
     }
 
 

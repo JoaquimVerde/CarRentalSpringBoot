@@ -79,6 +79,14 @@ public class CarService implements CarServiceInterface {
         }
         return optionalCar.get();
     }
+    @Override
+    public CarDto getCarDtoById(Long id){
+        Optional<Car> optionalCar = carRepository.findById(id);
+        if (optionalCar.isEmpty()) {
+            throw new CarIdNotFoundException(Messages.CAR_ID_NOT_FOUND.getMessage() + id);
+        }
+        return CarConverter.fromCarToCarDto(optionalCar.get());
+    }
 
 
 }
