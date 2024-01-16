@@ -27,4 +27,15 @@ public class ExternalService {
         }
     }*/
 
+    /*public Student getExternalService2(Long id)  {
+        RestClient restClient = RestClient.create();
+
+        return restClient
+                .get()
+                .uri("http://localhost:8080/api/v1/students/" + id)
+                .retrieve()
+                .body(Student.class);
+
+    }*/
+
 }
