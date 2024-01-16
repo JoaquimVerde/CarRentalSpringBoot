@@ -4,9 +4,9 @@ import SpringBootCarRental.CarRentalSpringBoot.converter.ClientConverter;
 import SpringBootCarRental.CarRentalSpringBoot.dto.ClientDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.ClientUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Client;
-import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.CannotDeleteException;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.ClientIdNotFoundException;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.EmailAlreadyExistsException;
 import SpringBootCarRental.CarRentalSpringBoot.repository.ClientRepository;
 import SpringBootCarRental.CarRentalSpringBoot.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class ClientService implements ClientServiceInterface {
     public void addNewClient(ClientDto client) {
         Optional<Client> clientOptional = this.clientRepository.findClientByEmail(client.email());
         if (clientOptional.isPresent())
-            throw new AppExceptions(Messages.CLIENT_EMAIL_ALREADY_EXISTS.getMessage());
+            throw new EmailAlreadyExistsException(Messages.CLIENT_EMAIL_ALREADY_EXISTS.getMessage());
         Client newClient = ClientConverter.fromClientDtoToClient(client);
         clientRepository.save(newClient);
     }

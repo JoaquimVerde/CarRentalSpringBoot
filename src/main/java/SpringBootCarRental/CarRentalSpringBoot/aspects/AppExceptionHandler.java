@@ -1,13 +1,9 @@
 package SpringBootCarRental.CarRentalSpringBoot.aspects;
 
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.*;
-import SpringBootCarRental.CarRentalSpringBoot.util.Messages;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -41,6 +37,18 @@ public class AppExceptionHandler {
     public ResponseEntity<String> CannotDelete(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("The Car or Client already has a registered rental and therefore cannot be deleted.");
+    }
+
+    @ExceptionHandler(value = {CarPlatesAlreadyExistException.class})
+    public ResponseEntity<String> CarPlatesAlreadyExist(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("The Car Plates already exist in database.");
+    }
+
+    @ExceptionHandler(value = {EmailAlreadyExistsException.class})
+    public ResponseEntity<String> EmailAlreadyExists(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("The Email already exists in database.");
     }
 
 

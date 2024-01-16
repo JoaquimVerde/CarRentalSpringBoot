@@ -7,6 +7,7 @@ import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.CannotDeleteException;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.CarIdNotFoundException;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.CarPlatesAlreadyExistException;
 import SpringBootCarRental.CarRentalSpringBoot.mapper.CarMapper;
 import SpringBootCarRental.CarRentalSpringBoot.repository.CarRepository;
 import SpringBootCarRental.CarRentalSpringBoot.util.Messages;
@@ -39,7 +40,7 @@ public class CarService implements CarServiceInterface {
     public void addNewCar(CarDto car) {
         Optional<Car> carOptional = this.carRepository.findCarByLicensePlate(car.licensePlate());
         if (carOptional.isPresent())
-            throw new AppExceptions(Messages.CAR_PLATES_ALREADY_EXIST.getMessage());
+            throw new CarPlatesAlreadyExistException(Messages.CAR_PLATES_ALREADY_EXIST.getMessage());
         Car newCar = CarConverter.fromCarDtoToCar(car);
         carRepository.save(newCar);
     }
