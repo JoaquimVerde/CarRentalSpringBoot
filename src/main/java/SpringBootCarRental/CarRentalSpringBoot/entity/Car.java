@@ -1,9 +1,10 @@
 package SpringBootCarRental.CarRentalSpringBoot.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.time.LocalDate;
-
+@Builder
 @Entity
 @Table
 public class Car {
@@ -39,6 +40,18 @@ public class Car {
         this.acquisitionDate = LocalDate.now();
         setAvailable(true);
 
+    }
+
+    public Car(Long id, String brand, String licensePlate, int horsePower, int km, LocalDate acquisitionDate, double dailyRate, boolean isAvailable, boolean hasARegisteredRental) {
+        this.id = id;
+        this.brand = brand;
+        this.licensePlate = licensePlate;
+        this.horsePower = horsePower;
+        this.km = km;
+        this.acquisitionDate = acquisitionDate;
+        this.dailyRate = dailyRate;
+        this.isAvailable = isAvailable;
+        this.HasARegisteredRental = hasARegisteredRental;
     }
 
     public Long getId() {
@@ -105,7 +118,7 @@ public class Car {
         this.isAvailable = available;
     }
 
-    public boolean HasARegisteredRental() {
+    public boolean hasARegisteredRental() {
         return HasARegisteredRental;
     }
 

@@ -10,7 +10,8 @@ public enum Messages {
     CANNOT_DECREASE_KM ("Cannot decrease km"),
     UNAVAILABLE_TO_RENT("Car unavailable to rent"),
     CANNOT_DELETE_CAR("Cannot delete this car: "),
-    CANNOT_DELETE_CLIENT("Cannot delete this client: ");
+    CANNOT_DELETE_CLIENT("Cannot delete this client: "),
+    RETURN_DATE_CANNOT_BE_PAST("return date cannot be in the past.");
 
     private String message;
 

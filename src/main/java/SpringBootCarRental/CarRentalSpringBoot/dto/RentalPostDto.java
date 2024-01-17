@@ -1,6 +1,7 @@
 package SpringBootCarRental.CarRentalSpringBoot.dto;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Future;
 
 import java.time.LocalDate;
 
@@ -10,6 +11,7 @@ public record RentalPostDto(
         @Valid
         Long carID,
         @Valid
+        @Future(message = "return date cannot be in the past.")
         LocalDate returnDate
 
 ) {

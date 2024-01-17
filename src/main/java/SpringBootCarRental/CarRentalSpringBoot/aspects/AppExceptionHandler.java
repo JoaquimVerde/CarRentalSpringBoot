@@ -63,6 +63,12 @@ public class AppExceptionHandler {
                 .body("Cannot decrease km in cars.");
     }
 
+    @ExceptionHandler(value = {ReturnDateInThePastException.class})
+    public ResponseEntity<String> ReturnDateCannotBePast(Exception ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body("return date cannot be in the past.");
+    }
+
 
 
 

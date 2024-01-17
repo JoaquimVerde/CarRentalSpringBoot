@@ -7,8 +7,10 @@ import SpringBootCarRental.CarRentalSpringBoot.dto.RentalUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Client;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Rental;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.CarUnavailableException;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.RentalIdNotFoundException;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.ReturnDateInThePastException;
 import SpringBootCarRental.CarRentalSpringBoot.repository.RentalRepository;
 import SpringBootCarRental.CarRentalSpringBoot.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +48,12 @@ public class RentalService implements RentalServiceInterface {
         if(!car.isAvailable()){
             throw new CarUnavailableException(Messages.UNAVAILABLE_TO_RENT.getMessage());
         }
+
         Client client = clientService.getById(rental.clientID());
+
+        if(rental.returnDate().isBefore(LocalDate.now())){
+            throw new ReturnDateInThePastException(Messages.RETURN_DATE_CANNOT_BE_PAST.getMessage());
+        }
 
         Rental newRental = new Rental(client, car, rental.returnDate());
 
