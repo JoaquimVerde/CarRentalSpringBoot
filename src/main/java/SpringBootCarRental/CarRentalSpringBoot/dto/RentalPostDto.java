@@ -12,7 +12,10 @@ public record RentalPostDto(
         Long carID,
         @Valid
         @Future(message = "return date cannot be in the past.")
-        LocalDate returnDate
+        LocalDate returnDate,
+        @Valid
+        @Future
+        LocalDate dateOfRental
 
 ) {
 }

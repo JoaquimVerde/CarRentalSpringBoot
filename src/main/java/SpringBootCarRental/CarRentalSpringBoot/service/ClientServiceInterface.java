@@ -10,7 +10,7 @@ import java.util.List;
 public interface ClientServiceInterface {
     List<ClientDto> getClients();
 
-    Client addNewClient(ClientDto client);
+    ClientDto addNewClient(ClientDto client);
 
     void deleteClient(Long clientId);
 

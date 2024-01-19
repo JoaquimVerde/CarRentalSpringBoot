@@ -16,18 +16,17 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 class ClientServiceTest {
 
+    static MockedStatic<ClientConverter> mockedClientConverter = Mockito.mockStatic(ClientConverter.class);
     @MockBean
     private ClientRepository clientRepositoryMock;
-
     private ClientService clientService;
-
-    static MockedStatic<ClientConverter> mockedClientConverter = Mockito.mockStatic(ClientConverter.class);
 
     @BeforeEach
     public void setUp() {
@@ -55,7 +54,7 @@ class ClientServiceTest {
 
         verify(clientRepositoryMock, times(1)).save(client);
         Mockito.verifyNoMoreInteractions(clientRepositoryMock);
-        assertEquals(client, clientService.addNewClient(clientDto));
+        assertEquals(clientDto, clientService.addNewClient(clientDto));
     }
 
     @Test

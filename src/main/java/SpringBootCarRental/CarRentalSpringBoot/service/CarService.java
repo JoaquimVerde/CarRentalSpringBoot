@@ -33,21 +33,22 @@ public class CarService implements CarServiceInterface {
     }
 
     @Override
-    public Car addNewCar(CarDto car) {
+    public CarDto addNewCar(CarDto car) {
         Optional<Car> carOptional = this.carRepository.findCarByLicensePlate(car.licensePlate());
         if (carOptional.isPresent())
             throw new CarPlatesAlreadyExistException(Messages.CAR_PLATES_ALREADY_EXIST.getMessage());
         Car newCar = CarConverter.fromCarDtoToCar(car);
-        return carRepository.save(newCar);
+        carRepository.save(newCar);
+        return car;
     }
 
     @Override
     public void deleteCar(Long carId) {
 
         Car car = carRepository.findById(carId).orElseThrow(
-                ()->  new CarIdNotFoundException(Messages.CAR_ID_NOT_FOUND.getMessage() + carId));
+                () -> new CarIdNotFoundException(Messages.CAR_ID_NOT_FOUND.getMessage() + carId));
 
-        if(car.hasARegisteredRental()){
+        if (car.hasARegisteredRental()) {
             throw new CannotDeleteException(Messages.CANNOT_DELETE_CAR.getMessage() + carId);
         }
         carRepository.deleteById(carId);
@@ -71,20 +72,29 @@ public class CarService implements CarServiceInterface {
     }
 
     @Override
-    public Car getById(Long id){
+    public Car getById(Long id) {
         Optional<Car> optionalCar = carRepository.findById(id);
         if (optionalCar.isEmpty()) {
             throw new CarIdNotFoundException(Messages.CAR_ID_NOT_FOUND.getMessage() + id);
         }
         return optionalCar.get();
     }
+
     @Override
-    public CarDto getCarDtoById(Long id){
+    public CarDto getCarDtoById(Long id) {
         Optional<Car> optionalCar = carRepository.findById(id);
         if (optionalCar.isEmpty()) {
             throw new CarIdNotFoundException(Messages.CAR_ID_NOT_FOUND.getMessage() + id);
         }
         return CarConverter.fromCarToCarDto(optionalCar.get());
+    }
+
+    public Car getCarByBrand(String brand) {
+        Car car = carRepository.getCarByBrand(brand).orElseThrow(() -> new AppExceptions(Messages.CANNOT_FIND_THAT_BRAND_CAR.getMessage()));
+        if (!car.isAvailable()) {
+            throw new CarUnavailableException(Messages.UNAVAILABLE_TO_RENT.getMessage());
+        }
+        return car;
     }
 
 

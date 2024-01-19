@@ -1,41 +1,29 @@
 package SpringBootCarRental.CarRentalSpringBoot.service;
 
+
+import okhttp3.*;
+
+import java.io.IOException;
+
 public class ExternalService {
-/*
-    @Service
-    public class ExternalService {
 
-        ObjectMapper objectMapper =  JsonMapper.builder()
-                .addModule(new JavaTimeModule())
-                .build();
-        public Student getExternalService(Long id) throws URISyntaxException, IOException, InterruptedException {
-            HttpClient client = HttpClient.newHttpClient();
+    OkHttpClient client = new OkHttpClient().newBuilder()
+            .build();
+    MediaType mediaType = MediaType.parse("text/plain");
+    RequestBody body = RequestBody.create(mediaType, "");
+    Request request = new Request.Builder()
+            .url("https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eur/usd.json")
+            .method("GET", body)
+            .build();
+    Response response;
 
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI("http://localhost:8080/api/v1/students/" + id))
-                    .GET()
-                    .build();
-
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            if(response.statusCode() == 200){
-                return objectMapper.readValue(response.body(), Student.class);
-            }
-
-            return  null;
-
+    {
+        try {
+            response = client.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-    }*/
+    }
 
-    /*public Student getExternalService2(Long id)  {
-        RestClient restClient = RestClient.create();
-
-        return restClient
-                .get()
-                .uri("http://localhost:8080/api/v1/students/" + id)
-                .retrieve()
-                .body(Student.class);
-
-    }*/
 
 }

@@ -1,6 +1,6 @@
 package SpringBootCarRental.CarRentalSpringBoot.controller;
 
-import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
+import SpringBootCarRental.CarRentalSpringBoot.dto.CarDto;
 import SpringBootCarRental.CarRentalSpringBoot.repository.CarRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -15,8 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.time.LocalDate;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -75,15 +73,12 @@ class CarControllerTest {
         //Then
         String responseContent = result.getResponse().getContentAsString();
 
-        Car car = objectMapper.readValue(responseContent, Car.class);
+        CarDto car = objectMapper.readValue(responseContent, CarDto.class);
 
         //assert car id and name using matchers
-        assertThat(car.getId()).isEqualTo(1L);
-        assertThat(car.getBrand()).isEqualTo("Mercedes");
-        assertThat(car.getLicensePlate()).isEqualTo("44-BB-22");
-        assertThat(car.getDailyRate()).isEqualTo(25);
-        assertThat(car.getAcquisitionDate()).isEqualTo(LocalDate.now());
-        assertThat(car.isAvailable()).isEqualTo(true);
+        assertThat(car.brand()).isEqualTo("Mercedes");
+        assertThat(car.licensePlate()).isEqualTo("44-BB-22");
+        assertThat(car.dailyRate()).isEqualTo(25);
 
     }
 

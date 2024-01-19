@@ -1,6 +1,6 @@
 package SpringBootCarRental.CarRentalSpringBoot.controller;
 
-import SpringBootCarRental.CarRentalSpringBoot.entity.Rental;
+import SpringBootCarRental.CarRentalSpringBoot.dto.RentalPostDto;
 import SpringBootCarRental.CarRentalSpringBoot.repository.CarRepository;
 import SpringBootCarRental.CarRentalSpringBoot.repository.ClientRepository;
 import SpringBootCarRental.CarRentalSpringBoot.repository.RentalRepository;
@@ -17,8 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.time.LocalDate;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -73,7 +71,7 @@ class RentalControllerTest {
     public void testCreateRentalReturnCreateAndGetIdEqualsTo1() throws Exception {
 
         //Given
-        String rentalJson = "{\"clientID\": \"1\", \"carID\": \"1\", \"returnDate\": \"2024-01-27\"}";
+        String rentalJson = "{\"clientID\": \"1\", \"carID\": \"1\", \"dateOfRental\": \"2024-02-02\", \"returnDate\": \"2024-02-05\"}";
         String carJson = "{\"brand\": \"Mercedes\", \"licensePlate\": \"44-BB-22\", \"horsePower\": \"1200\", \"km\": \"50000\", \"dailyRate\": \"25\"}";
         String clientJson = "{\"name\": \"Joao\", \"email\": \"j@eee.com\", \"driverLicense\": \"45655345\", \"nif\": \"223335111\", \"dateOfBirth\": \"1989-09-13\"}";
 
@@ -99,15 +97,12 @@ class RentalControllerTest {
         //Then
         String responseContent = resultRental.getResponse().getContentAsString();
 
-        Rental rental = objectMapper.readValue(responseContent, Rental.class);
+        RentalPostDto rental = objectMapper.readValue(responseContent, RentalPostDto.class);
 
         //assert client id and name using matchers
-        assertThat(rental.getId()).isEqualTo(1L);
-        assertThat(rental.getCar().getId()).isEqualTo(1);
-        assertThat(rental.getClient().getId()).isEqualTo(1);
-        assertThat(rental.getReturnDate()).isEqualTo("2024-01-27");
-        assertThat(rental.getDateOfRental()).isEqualTo(LocalDate.now());
-        assertThat(rental.getCar().isAvailable()).isEqualTo(false);
+        assertThat(rental.carID()).isEqualTo(1);
+        assertThat(rental.clientID()).isEqualTo(1);
+        assertThat(rental.returnDate()).isEqualTo("2024-02-05");
 
     }
 
@@ -135,11 +130,11 @@ class RentalControllerTest {
         //Create 2 rentals
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/rentals/")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"clientID\": \"1\", \"carID\": \"1\", \"returnDate\": \"2024-01-27\"}"));
+                .content("{\"clientID\": \"1\", \"carID\": \"1\", \"dateOfRental\": \"2024-01-26\", \"returnDate\": \"2024-01-27\"}"));
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/rentals/")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"clientID\": \"2\", \"carID\": \"2\", \"returnDate\": \"2024-01-26\"}"));
+                .content("{\"clientID\": \"2\", \"carID\": \"2\", \"dateOfRental\": \"2024-01-26\", \"returnDate\": \"2024-01-26\"}"));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/rentals/"))
                 .andExpect(status().isOk())

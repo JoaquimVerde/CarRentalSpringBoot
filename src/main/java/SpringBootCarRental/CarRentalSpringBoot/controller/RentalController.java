@@ -1,6 +1,8 @@
 package SpringBootCarRental.CarRentalSpringBoot.controller;
 
-import SpringBootCarRental.CarRentalSpringBoot.dto.*;
+import SpringBootCarRental.CarRentalSpringBoot.dto.RentalDto;
+import SpringBootCarRental.CarRentalSpringBoot.dto.RentalPostDto;
+import SpringBootCarRental.CarRentalSpringBoot.dto.RentalUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Rental;
 import SpringBootCarRental.CarRentalSpringBoot.service.RentalService;
 import jakarta.validation.Valid;
@@ -27,10 +29,16 @@ public class RentalController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Rental> addNewRental(@Valid @RequestBody RentalPostDto rental) {
+    public ResponseEntity<RentalPostDto> addNewRental(@Valid @RequestBody RentalPostDto rental) {
 
         return new ResponseEntity<>(rentalService.addNewRental(rental), HttpStatus.CREATED);
     }
+
+    /*@PostMapping("/")
+    public ResponseEntity<RentalPostByBrandDto> addRentalByBrand(@Valid @RequestBody RentalPostByBrandDto rental) {
+
+        return new ResponseEntity<>(rentalService.addRentalByBrand(rental), HttpStatus.CREATED);
+    }*/
 
     @DeleteMapping(path = "{rentalId}")
     public ResponseEntity<Rental> deleteRental(@PathVariable("rentalId") Long rentalId) {

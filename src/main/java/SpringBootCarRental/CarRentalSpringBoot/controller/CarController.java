@@ -29,7 +29,7 @@ public class CarController {
 
 
     @PostMapping("/")
-    public ResponseEntity<Car> addNewCar(@Valid @RequestBody CarDto car) {
+    public ResponseEntity<CarDto> addNewCar(@Valid @RequestBody CarDto car) {
 
         return new ResponseEntity<>(carService.addNewCar(car), HttpStatus.CREATED);
     }
@@ -39,6 +39,7 @@ public class CarController {
         carService.deleteCar(carId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @PatchMapping(path = "{carID}")
     public ResponseEntity<Car> updateCar(@PathVariable("carID") Long id, @Valid @RequestBody CarUpdateDto car) {
         carService.updateCar(id, car);

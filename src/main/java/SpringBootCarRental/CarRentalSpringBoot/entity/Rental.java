@@ -24,14 +24,13 @@ public class Rental {
     private boolean isTerminated;
 
 
-
     public Rental() {
     }
 
-    public Rental(Client client, Car car, LocalDate returnDate) {
+    public Rental(Client client, Car car, LocalDate returnDate, LocalDate dateOfRental) {
         this.client = client;
         this.car = car;
-        this.dateOfRental = LocalDate.now();
+        this.dateOfRental = dateOfRental;
         this.returnDate = returnDate;
         setTotalPrice();
         car.setAvailable(false);
@@ -85,7 +84,7 @@ public class Rental {
     }
 
     public void setTotalPrice() {
-        totalPrice = dateOfRental.until(getReturnDate(), ChronoUnit.DAYS)*car.getDailyRate();
+        totalPrice = dateOfRental.until(getReturnDate(), ChronoUnit.DAYS) * car.getDailyRate();
     }
 
     public boolean isTerminated() {

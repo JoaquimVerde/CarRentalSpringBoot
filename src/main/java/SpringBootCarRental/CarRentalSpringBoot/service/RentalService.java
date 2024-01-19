@@ -2,12 +2,12 @@ package SpringBootCarRental.CarRentalSpringBoot.service;
 
 import SpringBootCarRental.CarRentalSpringBoot.converter.RentalConverter;
 import SpringBootCarRental.CarRentalSpringBoot.dto.RentalDto;
+import SpringBootCarRental.CarRentalSpringBoot.dto.RentalPostByBrandDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.RentalPostDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.RentalUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Client;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Rental;
-import SpringBootCarRental.CarRentalSpringBoot.exceptions.AppExceptions;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.CarUnavailableException;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.RentalIdNotFoundException;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.ReturnDateInThePastException;
@@ -42,22 +42,22 @@ public class RentalService implements RentalServiceInterface {
     }
 
     @Override
-    public Rental addNewRental(RentalPostDto rental) {
+    public RentalPostDto addNewRental(RentalPostDto rental) {
 
         Car car = carService.getById(rental.carID());
-        if(!car.isAvailable()){
+        if (!car.isAvailable()) {
             throw new CarUnavailableException(Messages.UNAVAILABLE_TO_RENT.getMessage());
         }
 
         Client client = clientService.getById(rental.clientID());
 
-        if(rental.returnDate().isBefore(LocalDate.now())){
+        if (rental.returnDate().isBefore(LocalDate.now())) {
             throw new ReturnDateInThePastException(Messages.RETURN_DATE_CANNOT_BE_PAST.getMessage());
         }
 
-        Rental newRental = new Rental(client, car, rental.returnDate());
-
-        return rentalRepository.save(newRental);
+        Rental newRental = new Rental(client, car, rental.returnDate(), rental.dateOfRental());
+        rentalRepository.save(newRental);
+        return rental;
     }
 
     @Override
@@ -80,12 +80,12 @@ public class RentalService implements RentalServiceInterface {
 
         Rental rentalToUpdate = rentalOptional.get();
 
-        if(rental.returnDate() != null && rental.returnDate().isAfter(LocalDate.now()) && !rental.returnDate().equals(rentalToUpdate.getReturnDate())){
+        if (rental.returnDate() != null && rental.returnDate().isAfter(LocalDate.now()) && !rental.returnDate().equals(rentalToUpdate.getReturnDate())) {
             rentalToUpdate.setReturnDate(rental.returnDate());
             rentalToUpdate.setTotalPrice();
         }
         rentalToUpdate.setTerminated(rental.isTerminated());
-        if(rentalToUpdate.isTerminated()){
+        if (rentalToUpdate.isTerminated()) {
             rentalToUpdate.getCar().setAvailable(true);
         }
 
@@ -93,12 +93,20 @@ public class RentalService implements RentalServiceInterface {
     }
 
     @Override
-    public RentalDto getRentalDtoById(Long id){
+    public RentalDto getRentalDtoById(Long id) {
         Optional<Rental> optionalRental = rentalRepository.findById(id);
         if (optionalRental.isEmpty()) {
             throw new RentalIdNotFoundException(Messages.RENTAL_ID_NOT_FOUND.getMessage() + id);
         }
         return RentalConverter.fromRentalToRentalDto(optionalRental.get());
+    }
+
+    public RentalPostByBrandDto addRentalByBrand(RentalPostByBrandDto rental) {
+        Car car = carService.getCarByBrand(rental.brand());
+        Client client = clientService.getClientByEmail(rental.email());
+        Rental newRental = new Rental(client, car, rental.returnDate(), rental.dateOfRental());
+        rentalRepository.save(newRental);
+        return rental;
     }
 
 }

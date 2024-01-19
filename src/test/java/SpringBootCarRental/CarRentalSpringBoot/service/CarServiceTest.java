@@ -55,7 +55,7 @@ class CarServiceTest {
 
         verify(carRepositoryMock, times(1)).save(car);
         verifyNoMoreInteractions(carRepositoryMock);
-        assertEquals(car, carService.addNewCar(carDto));
+        assertEquals(carDto, carService.addNewCar(carDto));
     }
 
     @Test

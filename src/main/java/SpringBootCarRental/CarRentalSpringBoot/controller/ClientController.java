@@ -1,7 +1,5 @@
 package SpringBootCarRental.CarRentalSpringBoot.controller;
 
-import SpringBootCarRental.CarRentalSpringBoot.dto.CarDto;
-import SpringBootCarRental.CarRentalSpringBoot.dto.CarUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.ClientDto;
 import SpringBootCarRental.CarRentalSpringBoot.dto.ClientUpdateDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
@@ -31,8 +29,8 @@ public class ClientController {
     }
 
 
-   @PostMapping("/")
-    public ResponseEntity<Client> addNewClient(@Valid @RequestBody ClientDto client) {
+    @PostMapping("/")
+    public ResponseEntity<ClientDto> addNewClient(@Valid @RequestBody ClientDto client) {
 
         return new ResponseEntity<>(clientService.addNewClient(client), HttpStatus.CREATED);
     }
