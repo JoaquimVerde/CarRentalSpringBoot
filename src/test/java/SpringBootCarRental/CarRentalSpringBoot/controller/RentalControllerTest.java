@@ -1,6 +1,5 @@
 package SpringBootCarRental.CarRentalSpringBoot.controller;
 
-import SpringBootCarRental.CarRentalSpringBoot.entity.Client;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Rental;
 import SpringBootCarRental.CarRentalSpringBoot.repository.CarRepository;
 import SpringBootCarRental.CarRentalSpringBoot.repository.ClientRepository;
@@ -23,7 +22,6 @@ import java.time.LocalDate;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -31,17 +29,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class RentalControllerTest {
 
 
+    private static ObjectMapper objectMapper;
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private RentalRepository rentalRepository;
     @Autowired
     private CarRepository carRepository;
     @Autowired
     private ClientRepository clientRepository;
-
-    private static ObjectMapper objectMapper;
 
     @BeforeAll
     public static void setUp() {
@@ -57,7 +53,6 @@ class RentalControllerTest {
         carRepository.resetAutoIncrement();
         clientRepository.deleteAll();
         clientRepository.resetAutoIncrement();
-
     }
 
     @Test
@@ -155,7 +150,6 @@ class RentalControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/rentals/1"));
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/rentals/2"));
     }
-
 
 
 }

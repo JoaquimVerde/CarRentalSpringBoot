@@ -3,7 +3,6 @@ package SpringBootCarRental.CarRentalSpringBoot.service;
 import SpringBootCarRental.CarRentalSpringBoot.converter.CarConverter;
 import SpringBootCarRental.CarRentalSpringBoot.dto.CarDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
-
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.CarIdNotFoundException;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.CarPlatesAlreadyExistException;
 import SpringBootCarRental.CarRentalSpringBoot.repository.CarRepository;
@@ -18,18 +17,17 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 class CarServiceTest {
 
+    static MockedStatic<CarConverter> mockedCarConverter = Mockito.mockStatic(CarConverter.class);
     @MockBean
     private CarRepository carRepositoryMock;
-
     private CarService carService;
-
-    static MockedStatic<CarConverter> mockedCarConverter = Mockito.mockStatic(CarConverter.class);
 
     @BeforeEach
     public void setUp() {
@@ -74,7 +72,7 @@ class CarServiceTest {
     }
 
     @Test
-    void testDeleteCarCallsRepository(){
+    void testDeleteCarCallsRepository() {
         //given
         Car car = Car.builder().id(1L).brand("mercedes").build();
         when(carRepositoryMock.existsById(car.getId())).thenReturn(true);
@@ -86,7 +84,7 @@ class CarServiceTest {
     }
 
     @Test
-    void testDeleteCarThrowsExceptionIdNotFound(){
+    void testDeleteCarThrowsExceptionIdNotFound() {
         //given
         Car car = Car.builder().id(1L).brand("mercedes").build();
         //when
@@ -95,8 +93,7 @@ class CarServiceTest {
         //then
         assertThrows(CarIdNotFoundException.class, () -> carService.deleteCar(car.getId()));
         assertEquals("Car Id not found: 1", assertThrows(CarIdNotFoundException.class, () -> carService.deleteCar(car.getId())).getMessage());
-
-
     }
+
 
 }

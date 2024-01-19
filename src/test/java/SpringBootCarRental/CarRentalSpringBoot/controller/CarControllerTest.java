@@ -1,9 +1,7 @@
 package SpringBootCarRental.CarRentalSpringBoot.controller;
 
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
-import SpringBootCarRental.CarRentalSpringBoot.entity.Client;
 import SpringBootCarRental.CarRentalSpringBoot.repository.CarRepository;
-import SpringBootCarRental.CarRentalSpringBoot.repository.ClientRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -23,20 +20,17 @@ import java.time.LocalDate;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class CarControllerTest {
 
+    private static ObjectMapper objectMapper;
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private CarRepository carRepository;
-
-    private static ObjectMapper objectMapper;
 
     @BeforeAll
     public static void setUp() {
