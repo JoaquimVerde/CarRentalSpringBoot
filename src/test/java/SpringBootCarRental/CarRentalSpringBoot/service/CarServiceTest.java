@@ -1,13 +1,10 @@
 package SpringBootCarRental.CarRentalSpringBoot.service;
 
 import SpringBootCarRental.CarRentalSpringBoot.converter.CarConverter;
-import SpringBootCarRental.CarRentalSpringBoot.converter.ClientConverter;
 import SpringBootCarRental.CarRentalSpringBoot.dto.CarDto;
-import SpringBootCarRental.CarRentalSpringBoot.dto.ClientDto;
 import SpringBootCarRental.CarRentalSpringBoot.entity.Car;
-import SpringBootCarRental.CarRentalSpringBoot.entity.Client;
 
-import SpringBootCarRental.CarRentalSpringBoot.entity.builders.CarBuilder;
+import SpringBootCarRental.CarRentalSpringBoot.exceptions.CarIdNotFoundException;
 import SpringBootCarRental.CarRentalSpringBoot.exceptions.CarPlatesAlreadyExistException;
 import SpringBootCarRental.CarRentalSpringBoot.repository.CarRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -86,6 +83,20 @@ class CarServiceTest {
         carService.deleteCar(car.getId());
         //then
         verify(carRepositoryMock, times(1)).deleteById(car.getId());
+    }
+
+    @Test
+    void testDeleteCarThrowsExceptionIdNotFound(){
+        //given
+        Car car = Car.builder().id(1L).brand("mercedes").build();
+        //when
+        when(carRepositoryMock.findById(car.getId())).thenReturn(Optional.empty());
+
+        //then
+        assertThrows(CarIdNotFoundException.class, () -> carService.deleteCar(car.getId()));
+        assertEquals("Car Id not found: 1", assertThrows(CarIdNotFoundException.class, () -> carService.deleteCar(car.getId())).getMessage());
+
+
     }
 
 }

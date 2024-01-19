@@ -112,6 +112,7 @@ class RentalControllerTest {
         assertThat(rental.getClient().getId()).isEqualTo(1);
         assertThat(rental.getReturnDate()).isEqualTo("2024-01-27");
         assertThat(rental.getDateOfRental()).isEqualTo(LocalDate.now());
+        assertThat(rental.getCar().isAvailable()).isEqualTo(false);
 
     }
 

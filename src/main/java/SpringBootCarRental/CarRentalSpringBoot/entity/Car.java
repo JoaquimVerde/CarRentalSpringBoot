@@ -21,7 +21,7 @@ public class Car {
 
     private double dailyRate;
     private boolean isAvailable;
-    private boolean HasARegisteredRental;
+    private boolean hasARegisteredRental;
 
 
 
@@ -51,7 +51,7 @@ public class Car {
         this.acquisitionDate = acquisitionDate;
         this.dailyRate = dailyRate;
         this.isAvailable = isAvailable;
-        this.HasARegisteredRental = hasARegisteredRental;
+        this.hasARegisteredRental = hasARegisteredRental;
     }
 
     public Long getId() {
@@ -119,10 +119,10 @@ public class Car {
     }
 
     public boolean hasARegisteredRental() {
-        return HasARegisteredRental;
+        return hasARegisteredRental;
     }
 
     public void setHasARegisteredRental(boolean hasARegisteredRental) {
-        HasARegisteredRental = hasARegisteredRental;
+        this.hasARegisteredRental = hasARegisteredRental;
     }
 }

@@ -67,6 +67,7 @@ public class RentalService implements RentalServiceInterface {
             throw new RentalIdNotFoundException(Messages.RENTAL_ID_NOT_FOUND.getMessage() + rentalId);
         }
 
+
         rentalRepository.deleteById(rentalId);
     }
 
